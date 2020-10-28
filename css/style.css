@@ -1,0 +1,145 @@
+*{
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+nav{
+    background-color:#393e46;
+    height: 64px;
+}
+
+.brand-logo img {
+    margin-top: 3px;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer{
+    padding: 10px;
+    color: white;
+    background-color: #393e46;
+}
+
+.title{
+    background-color: #00adb5; 
+    border-radius: 8px; 
+    padding: 1px; 
+    margin-top: 5px;
+}
+
+.nav-item{
+    color: #393e46;
+}
+
+.link{
+    color:#eeee;
+}
+
+.klasemen-button{
+    background-color: #393e46; 
+    border: none; 
+    outline: none; 
+    border-radius: 8px; 
+    padding: 7px;
+}
+
+.schedules{
+    background-color: #00adb5;
+    color: #eeee;
+    font-weight: bolder;
+}
+
+.standing-header{
+    color: #222831;
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+}
+
+.club-name-table{
+    color: #00adb5
+}
+
+.club-standing-logo{
+    margin-left: 10px;
+}
+
+.klasemen-title{
+    margin-top: 40px;
+}
+
+
+.schedule{
+    padding: 5px;
+    background-color: #00adb5;
+    color: white;
+}
+
+
+.btn-remove-favorite{
+    border: unset;
+    outline: unset;
+    background-color: inherit;
+    font-size: 8pt;
+    color: rgb(219, 20, 20);
+}
+
+.btn-remove-favorite:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.btn-schedules, .btn-club-information, .btn-save-favorite, .btn-club-detail, .btn-remove-favorite-club{
+    background-color: #393e46;
+    color: white;
+    margin-top: 5px;
+}
+
+.btn-remove-favorite-club:hover{
+    background-color: rgb(190, 57, 57);
+}
+
+
+.loader {
+    margin-top: 20%;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid  #393e46;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+.back-arrow{
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .table-responsive {
+        display: block;
+         overflow-x: auto;
+         -webkit-overflow-scrolling: touch;
+         -ms-overflow-style: -ms-autohiding-scrollbar;
+     }
+  }
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+

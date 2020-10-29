@@ -13,9 +13,9 @@ workbox.precaching.precacheAndRoute([
     { url: '/offline_page.html', revision: '1' },
     { url: '/index.html', revision: '1' },
     { url: '/nav.html', revision: '1' },
-    { url: '/match.heml', revision: '1' },
+    { url: '/match.html', revision: '1' },
     { url: '/club_information.html', revision: '1' },
-    { url: '/standing.html', revision: '1' },
+    { url: '/standings.html', revision: '1' },
     { url: '/pages/home.html', revision: '1' },
     { url: '/pages/about.html', revision: '1' },
     { url: '/pages/my_favorite_clubs.html', revision: '1' },
@@ -48,12 +48,12 @@ workbox.routing.registerRoute(
 );
 
 
-const offlinePage = '/offline/';
+const offlinePage = '/offline_page.html';
 /**
  * Pages to cache
  */
 workbox.routing.registerRoute(
-  new RegExp('/pages/'),
+  new RegExp('http://127.0.0.1:8878/'),
   async ({event}) => {
     try {
       return await workbox.strategies.staleWhileRevalidate({

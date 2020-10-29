@@ -18,5 +18,8 @@
   "homepage": "https://github.com/DandiIndraWijaya/Top-Euro-Football#readme",
   "dependencies": {
     "web-push": "^3.4.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1"
   }
 }

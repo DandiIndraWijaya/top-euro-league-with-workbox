@@ -25,8 +25,8 @@ const goBack = () => {
 
 const getCompetitionStandings = () => {
     // Ambil nilai query parameter (?id=)
-    var urlParams = new URLSearchParams(window.location.search);
-    var idParam = urlParams.get("id");
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
 
     // Mengambil data klasemen ke server
     fetch(`${base_url}competitions/${idParam}/standings`, {
@@ -38,27 +38,10 @@ const getCompetitionStandings = () => {
       .then(json)
       .then(data => {
         data.status = "(The data is up to date)"
+        
+        navigator.onLine ? data.status = "(The data is up to date)" : data.status = "(The data isn't Updated because you're offline)";
+
         showData(data, idParam);
-      })
-      .catch(() => {
-        // Jika tidak ada koneksi internet, tampilkan data klasemen di dalam cache
-        caches.match(`${base_url}competitions/${idParam}/standings`)
-            .then(response => {
-                if (response) {
-                response.json().then(function(data) {
-                    data.status = "(The data isn't Updated because you're offline)"
-                    showData(data, idParam);
-                });
-                }else{
-                    // Jika dalam cache tidak terdapat data maka tampilkan kode di bawah
-                    content.innerHTML = `
-                    <a class="back-arrow" onclick="goBack()"><h3 style="margin: 0px;">&larr;</h3></a>
-                    <center>
-                        <h3 style="margin-top: 20%">No Data & You're Offline</h3>
-                        <h5>Connect your device to internet to receive data</h5>
-                    </center>`
-                }
-            });
       })
     
     // Kode untuk menampilkan sata kompetisi yang didapat dari server atau cache
@@ -152,25 +135,6 @@ const getClubMatch = () => {
     .then(function(data) {
         showData(data, logoParam ,idParam)
     })
-    .catch(() => {
-        // Jika tidak terdapat koneksi internet, ambil data jadwal ke cache
-        caches.match(`https://api.football-data.org/v2/teams/${idParam}/matches?status=SCHEDULED`)
-        .then(response => {
-            if (response) {
-                response.json().then(function(data) {
-                    showData(data, logoParam ,idParam);
-                });
-            }else{
-                // Jika belum ada pada cache tampilkan kode di bawah
-                content.innerHTML = `
-                <a class="back-arrow" onclick="goBack()"><h3 style="margin: 0px;">&larr;</h3></a>
-                <center>
-                    <h3 style="margin-top: 20%">No Data & You're Offline</h3>
-                    <h5>Connect your device to internet to receive data</h5>
-                </center>`
-            }
-        });
-    })
     
     //Kode untuk menampilkan data jadwal pertandingan suatu klub
     let showData = (data, emblem) =>{
@@ -233,34 +197,7 @@ const getClubInformation = () => {
                 showData(data, idParam, false)
             }
         });
-    })
-    .catch(() => {
-        // Ambil data dari caches jika tidak ada konesi internet
-        caches.match(`${base_url}teams/${idParam}`).then(function(response) {
-            if (response) {
-              response.json().then(function(data) {
-                 // Cek indexedDB apakah klub ada dalam objek store favorite-clubs
-                checkFavoriteClub(parseInt(idParam)).then(club => {
-                    if(club){
-                        // Jika iya 
-                        showData(data, idParam, true)
-                    }else{
-                        // Jika tidak
-                        showData(data, idParam, false)
-                    }
-                });
-              });
-            }else{
-                // Tampilkan kode di bawah jika tidak ditemukan data informasi suatu klub dalam cache
-                content.innerHTML = `
-                <a class="back-arrow" onclick="goBack()"><h3 style="margin: 0px;">&larr;</h3></a>
-                <center>
-                    <h3 style="margin-top: 20%">No Data & You're Offline</h3>
-                    <h5>Connect your device to internet to receive data</h5>
-                </center>`
-            }
-        });
-    })
+    });
 
     // Kode untuk menampilkan data informasi suatu klub
     let showData = (data, id, check) => {

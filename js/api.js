@@ -20,11 +20,6 @@ const json = response => {
     return response.json();
 }
 
-// Blok kode untuk kembali ke halaman sebelumnya
-const goBack = () => {
-    window.history.back();
-}
-
 const getCompetitionStandings = () => {
     // Ambil nilai query parameter (?id=)
     let urlParams = new URLSearchParams(window.location.search);
@@ -123,7 +118,6 @@ const getCompetitionStandings = () => {
                 `
                 const goback = document.querySelector(".back-arrow")
                 if(goback){
-                    console.log(goback)
                     goback.addEventListener('click', () => {
                         window.history.back();
                     })
@@ -186,7 +180,6 @@ const getClubMatch = () => {
 
             const goback = document.querySelector(".back-arrow")
                 if(goback){
-                    console.log(goback)
                     goback.addEventListener('click', () => {
                         window.history.back();
                     })

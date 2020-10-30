@@ -40,10 +40,13 @@
 
 
   <script src="js/materialize.min.js"></script>
-  <script src="js/idb.js"></script>
-  <script src="js/db.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/index.js" type="module"></script>
+  <script>
+    // Blok kode untuk kembali ke halaman sebelumnya
+      const goBack = () => {
+          window.history.back();
+      }
+  </script>
 
   <script>
     //REGISTER SERVICE WORKER

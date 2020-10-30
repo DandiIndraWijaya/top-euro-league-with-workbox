@@ -50,7 +50,7 @@ workbox.routing.registerRoute(
     plugins: [
       new workbox.expiration.Plugin({
         maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+        maxAgeSeconds: 30 * 24 * 60 * 60, 
       }),
     ],
   })
@@ -58,11 +58,10 @@ workbox.routing.registerRoute(
 
 
 const offlinePage = '/offline_page.html';
-/**
- * Pages to cache
- */
+const url = 'http://127.0.0.1:8878/'
+
 workbox.routing.registerRoute(
-  new RegExp('https://top-euro-league.web.app/'),
+  new RegExp(url),
   async ({event}) => {
     try {
       return await workbox.strategies.staleWhileRevalidate({
@@ -74,18 +73,31 @@ workbox.routing.registerRoute(
   },
 );
 
-workbox.routing.registerRoute(
-  new RegExp('https://top-euro-league.firebaseapp.com/'),
-  async ({event}) => {
-    try {
-      return await workbox.strategies.staleWhileRevalidate({
-          cacheName: 'cache-pages',
-      }).handle({event});
-    } catch (error) {
-      return caches.match(offlinePage);
-    }
-  },
-);
+// workbox.routing.registerRoute(
+//   new RegExp('https://top-euro-league.web.app/'),
+//   async ({event}) => {
+//     try {
+//       return await workbox.strategies.staleWhileRevalidate({
+//           cacheName: 'cache-pages',
+//       }).handle({event});
+//     } catch (error) {
+//       return caches.match(offlinePage);
+//     }
+//   },
+// );
+
+// workbox.routing.registerRoute(
+//   new RegExp('https://top-euro-league.firebaseapp.com/'),
+//   async ({event}) => {
+//     try {
+//       return await workbox.strategies.staleWhileRevalidate({
+//           cacheName: 'cache-pages',
+//       }).handle({event});
+//     } catch (error) {
+//       return caches.match(offlinePage);
+//     }
+//   },
+// );
 
 self.addEventListener('push', function(event) {
   let body;

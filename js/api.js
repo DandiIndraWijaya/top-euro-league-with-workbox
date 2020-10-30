@@ -25,11 +25,7 @@ const getCompetitionStandings = () => {
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
 
-    const goBack = () => {
-        window.history.back();
-    }
-
-    // Mengambil data klasemen ke server
+    // Mengambil data klasemen dari url server
     fetch(`${base_url}competitions/${idParam}/standings`, {
         headers: {
             "X-Auth-Token" : "d6a0462a40b74b29b622919e71c7b069"
@@ -38,7 +34,6 @@ const getCompetitionStandings = () => {
       .then(status)
       .then(json)
       .then(data => {
-        data.status = "(The data is up to date)"
         
         navigator.onLine ? data.status = "(The data is up to date)" : data.status = "(The data isn't Updated because you're offline)";
 
@@ -132,7 +127,7 @@ const getClubMatch = () => {
     let idParam = urlParams.get("id");
     let logoParam = urlParams.get("logo");
 
-    // Mengambil data jadwal pertandingan suatu klub ke server
+    // Mengambil data jadwal pertandingan suatu klub dari url server
     fetch(`https://api.football-data.org/v2/teams/${idParam}/matches?status=SCHEDULED`, {
         headers: {
             "X-Auth-Token" : "d6a0462a40b74b29b622919e71c7b069"
@@ -193,7 +188,7 @@ const getClubInformation = () => {
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
 
-    // Ambil data informasi suatu klub ke server
+    // Ambil data informasi suatu klub dari url server
     fetch(`${base_url}teams/${idParam}`, {
         headers: {
             "X-Auth-Token" : "d6a0462a40b74b29b622919e71c7b069"

@@ -45,7 +45,15 @@ workbox.precaching.precacheAndRoute([
 
 workbox.routing.registerRoute(
   new RegExp('https://api.football-data.org/v2/'),
-  workbox.strategies.networkFirst()
+  workbox.strategies.networkFirst({
+    name: 'football-data-api',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+    ],
+  })
 );
 
 
@@ -58,12 +66,18 @@ workbox.routing.registerRoute(
   async ({event}) => {
     try {
       return await workbox.strategies.staleWhileRevalidate({
-          cacheName: 'cache-pages'
+          cacheName: 'cache-pages',
+          plugins: [
+            new workbox.expiration.Plugin({
+              maxEntries: 60,
+              maxAgeSeconds: 30 * 24 * 60 * 60,
+            }),
+          ],
       }).handle({event});
     } catch (error) {
       return caches.match(offlinePage);
     }
-  }
+  },
 );
 
 self.addEventListener('push', function(event) {

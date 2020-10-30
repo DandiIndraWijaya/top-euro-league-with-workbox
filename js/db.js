@@ -1,4 +1,4 @@
-
+import idb from './idb.js';
 
 let dbPromised = idb.openDB("top-euro-football", 1, {
     upgrade(db){
@@ -57,18 +57,9 @@ const checkFavoriteClub = id => {
     })
 }
 
-const getClubById = id => {
-    return new Promise(function(resolve, reject) {
-      dbPromised
-        .then(function(db) {
-          var tx = db.transaction("articles", "readonly");
-          var store = tx.objectStore("articles");
-          return store.get(id);
-        })
-        .then(function(article) {
-          resolve(article);
-        })
-    });
-  }
-
-
+export {
+    saveToFavoriteClubs,
+    removeFromFavoriteClubs,
+    getAllSavedFavoriteClubs,
+    checkFavoriteClub,
+}

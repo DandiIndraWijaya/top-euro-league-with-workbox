@@ -1,3 +1,5 @@
+import { checkFavoriteClub, removeFromFavoriteClubs, saveToFavoriteClubs, getAllSavedFavoriteClubs } from './db.js';
+
 let base_url = "https://api.football-data.org/v2/";
 const content = document.querySelector(".body-content");
 
@@ -27,6 +29,10 @@ const getCompetitionStandings = () => {
     // Ambil nilai query parameter (?id=)
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
+
+    const goBack = () => {
+        window.history.back();
+    }
 
     // Mengambil data klasemen ke server
     fetch(`${base_url}competitions/${idParam}/standings`, {
@@ -66,7 +72,7 @@ const getCompetitionStandings = () => {
             }
             
             content.innerHTML = `
-                <a class="back-arrow" onclick="goBack()"><h3 style="margin: 0px;">&larr;</h3></a>
+                <a class="back-arrow"><h3 style="margin: 0px;">&larr;</h3></a>
                 <center><img src="${emblem}" widt="100" height="100" class="club-standing-emblem" alt="league emblem" /></center>
                 <h5>Standings <span style="font-size: 10pt;">${data.status}</span> </h5> 
                 <center>
@@ -115,7 +121,15 @@ const getCompetitionStandings = () => {
                     
                 </center>
                 `
+                const goback = document.querySelector(".back-arrow")
+                if(goback){
+                    console.log(goback)
+                    goback.addEventListener('click', () => {
+                        window.history.back();
+                    })
+                }
     }
+    
 }
 
 const getClubMatch = () => {
@@ -141,7 +155,7 @@ const getClubMatch = () => {
        
         const schedules = data.matches;
         content.innerHTML = `
-            <a class="back-arrow" onclick="goBack()"><h3 style="margin: 0px;">&larr;</h3></a>
+            <a class="back-arrow"><h3 style="margin: 0px;">&larr;</h3></a>
             <center>
                 <img src="${emblem}" width="100" height="100" alt="club emblem" />
             </center>
@@ -169,6 +183,14 @@ const getClubMatch = () => {
                     }
                 ).join(" ")
             }`;
+
+            const goback = document.querySelector(".back-arrow")
+                if(goback){
+                    console.log(goback)
+                    goback.addEventListener('click', () => {
+                        window.history.back();
+                    })
+                }
     }
     
 }       
@@ -202,7 +224,7 @@ const getClubInformation = () => {
     // Kode untuk menampilkan data informasi suatu klub
     let showData = (data, id, check) => {
         content.innerHTML = `
-            <a class="back-arrow" onclick="goBack()"><h3 style="margin: 0px;">&larr;</h3></a>
+            <a class="back-arrow"><h3 style="margin: 0px;">&larr;</h3></a>
             <div class="card" style="padding: 5px;">
                 <center>
                     <h5 style="text-decoration: underline">${data.name}</h5>
@@ -259,7 +281,14 @@ const getClubInformation = () => {
 
             </div>
         `;
-
+        
+        const goback = document.querySelector(".back-arrow")
+                if(goback){
+                    console.log(goback)
+                    goback.addEventListener('click', () => {
+                        window.history.back();
+                    })
+                }
         
         const btnFavorite = document.querySelector(".btn-save-favorite");
         const btnRemoveFavorite = document.querySelector(".btn-remove-favorite");
@@ -341,3 +370,11 @@ const getFavoriteClubsFromIndexedDB = (data, loadPage, page) => {
         }
     })
 }
+
+export {
+    getCompetitionStandings,
+    getClubMatch,
+    getClubInformation,
+    getFavoriteClubsFromIndexedDB,
+}
+

@@ -46,11 +46,11 @@ workbox.precaching.precacheAndRoute([
 workbox.routing.registerRoute(
   new RegExp('https://api.football-data.org/v2/'),
   workbox.strategies.networkFirst({
-    name: 'football-data-api',
+    cacheName: 'football-data-api',
     plugins: [
       new workbox.expiration.Plugin({
         maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
       }),
     ],
   })
@@ -62,17 +62,24 @@ const offlinePage = '/offline_page.html';
  * Pages to cache
  */
 workbox.routing.registerRoute(
-  new RegExp('http://127.0.0.1:8878/'),
+  new RegExp('https://top-euro-league.web.app/'),
   async ({event}) => {
     try {
       return await workbox.strategies.staleWhileRevalidate({
           cacheName: 'cache-pages',
-          plugins: [
-            new workbox.expiration.Plugin({
-              maxEntries: 60,
-              maxAgeSeconds: 30 * 24 * 60 * 60,
-            }),
-          ],
+      }).handle({event});
+    } catch (error) {
+      return caches.match(offlinePage);
+    }
+  },
+);
+
+workbox.routing.registerRoute(
+  new RegExp('https://top-euro-league.firebaseapp.com/'),
+  async ({event}) => {
+    try {
+      return await workbox.strategies.staleWhileRevalidate({
+          cacheName: 'cache-pages',
       }).handle({event});
     } catch (error) {
       return caches.match(offlinePage);
